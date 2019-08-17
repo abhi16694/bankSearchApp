@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<title>Assignment Work</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+<body>
+	<div role="main" class="container theme-showcase">
+      <div class="" style="margin-top:90px;">
+        <div class="col-lg-8">
+ <div class="page-header">
+
+<h2 id="tables">Banks Search Application</h2>
+</div>
+<div class="bs-component" ng-controller="DemoController as DM">
+	<form class="form-inline">
+        <div class="form-group">
+            <label >Search Here:</label>
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </form>
+    <hr><hr>
+	Select City Name:
+	<select ng-model="search">
+	<option value="">MUMBAI</option>
+	<option>BANGLORE</option>
+	<option>PUNE</option>
+	<option>HYDERABAD</option>
+	<option>INDORE</option>
+	</select>
+	<br> <br>
+<hr><hr>
+	<table class="table table-striped table-hover">
+		<thead>
+		<tr>
+			<th> Sno.</th>
+			<th> IFSC Code</th>
+			<th> Bank Id</th>
+			<th> Branch</th>
+			<th> Address</th>
+			<th> City</th>
+			<th> District</th>
+			<th> State</th>
+			<th> Bank Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr dir-paginate="item in DM.items | filter: search | itemsPerPage:DM.view" >
+			<td> {{$index+1}}</td>
+			<td> {{item.ifsc}}</td>
+			<td> {{item.bank_id}}</td>
+			<td> {{item.branch}}</td>
+			<td> {{item.address}}</td>
+			<td> {{item.city}}</td>
+			<td> {{item.district}}</td>
+			<td> {{item.state}}</td>
+			<td><a ng-href="#banks/{{item.bank_id}}">{{item.bank_name}}</a></td>
+            <td><button type="button" ng-click="DM.favouriteThis(item)">Add To Favourites</button></td>
+</tr>
+</tbody>
+</table>
+<hr><hr>
+Select Page Size:
+	<select ng-model="DM.view">
+    <option>5</option>
+	<option>10</option>
+	<option>15</option>
+	<option>20</option>
+	<option>25</option>
+	</select>
+	<br> <br>
+<hr><hr>
+<dir-pagination-controls
+        max-size="10"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+    <hr><hr>
+    <button class="button" type="button" ng-click="DM.viewFavorites()" >View Favourites</button>
+    <div ng-show="DM.isVisible">
+    <table class="table table-striped table-hover">
+    	<thead>
+      <tr>
+       <th>Index</th>
+      <th>Bank Name</th>
+      <th>Branch</th>
+    </tr>
+</thead>
+<tbody>
+      <tr ng-repeat="item in DM.retrievedObjects track by $index">
+         <td>{{ $index+1 }}</td>
+       <td> {{ item.bank_name}}</td>
+       <td>{{ item.branch }}</td>
+     </tr>
+ </tbody>
+    </table>    
+    </div>
+</div>
+</div></div></div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
+<script src="extra/dirPagination.js"></script>
+<script src="app/app.js"></script>
+</body>
+</html>
